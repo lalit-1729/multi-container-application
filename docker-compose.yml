@@ -1,0 +1,73 @@
+version: '3'
+services:
+  postgres-database:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+  redis-database:
+    image: redis:latest
+  ###############################
+  # Express Server Configuration #
+  ###############################
+  express-server:
+    build:
+      context: ./express_server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./express_server:/app
+    environment:
+      - REDIS_HOST=redis-database
+      - REDIS_PORT=6379
+      - PG_USER=postgres
+      - PG_HOST=postgres-database
+      - PG_DB=postgres
+      - PG_PASSWORD=postgres_password
+      - PG_PORT=5432
+  #############################
+  #    Worker Configuration    #
+  #############################
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis-database
+      - REDIS_PORT=6379
+  ###############################
+  #    React UI Configuration    #
+  ###############################
+  react-ui:
+    build:
+      context: ./react-client-ui
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./react-client-ui:/app
+    environment:
+      - REDIS_HOST=redis-database
+      - REDIS_PORT=6379
+      - PG_USER=postgres
+      - PG_HOST=postgres-database
+      - PG_DB=postgres
+      - PG_PASSWORD=postgres_password
+      - PG_PORT=5432
+  ###############################
+  #     Nginx Configuration      #
+  ###############################
+  nginx-server:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:80"
+    depends_on:
+      - express-server
+      - react-ui
+
+# variableName=value -> sets the env at the run time and values are kept on the container vm
+# variableName -> set the env var at the runtine and values are taken from host machine.

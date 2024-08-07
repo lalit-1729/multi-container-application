@@ -17,15 +17,15 @@ jobs:
     - name: Check docker version
       run: docker --version
     - name: Check docker-compose --version
-      run: docker-compose --version
+      run: docker compose --version
     - name: Docker-compose building images
-      run: docker-compose build -f docker-compose.yml
+      run: docker compose build -f docker-compose.yml
     - name: Listing built images from docker-compose
       run: docker images --all
   push:
     runs-on: ubuntu-latest
     steps:
     - name: pushing images
-      run: docker-compose push
+      run: docker compose push
     - name: logging out
       run: docker logout

@@ -28,6 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: viewing all the services
-      run: docker compose ps
+      run: docker compose -f ./docker-compose.yml ps
     - name: pushing images
       run: docker compose push

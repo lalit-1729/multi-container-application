@@ -20,14 +20,14 @@ jobs:
       run: docker compose version
     - name: Docker-compose building images
       run: docker compose -f docker-compose.yml build
-    # - name: Listing built images from docker-compose
-    #   run: docker images --all
-    # - name: Run docker-compose
-    #   uses: hoverkraft-tech/compose-action@v2.0.1
-    #   with:
-    #     compose-file: "./docker-compose.yml"
-    # - name: Listing built images from docker-compose
-    #   run: docker images --all
-    # - name: Pushing all the images
-    #   run: |
-    #       docker-compose push
+    - name: Listing built images from docker-compose
+      run: docker images --all
+  
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: viewing all the services
+      run: docker compose ps
+    - name: pushing images
+      run: docker compose push

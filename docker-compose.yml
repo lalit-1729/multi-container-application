@@ -21,6 +21,7 @@ services:
       - PG_DB=postgres
       - PG_PASSWORD=postgres_password
       - PG_PORT=5432
+    image: lalitthakare1729/complex-express-server:latest
   ##############################
   #    Worker Configuration    #
   ##############################
@@ -31,6 +32,7 @@ services:
     environment:
       - REDIS_HOST=redis-database
       - REDIS_PORT=6379
+    image: lalitthakare1729/complex-worker-image:latest
   ################################
   #    React UI Configuration    #
   ################################
@@ -47,6 +49,7 @@ services:
       - PG_DB=postgres
       - PG_PASSWORD=postgres_password
       - PG_PORT=5432
+    image: lalitthakare1729/complex-react-server:latest
   ################################
   #     Nginx Configuration      #
   ################################
@@ -60,6 +63,7 @@ services:
     depends_on:
       - express-server
       - react-ui
+    image: lalitthakare1729/complex-nginx-server:latest
 
 # variableName=value -> sets the env at the run time and values are kept on the container vm
 # variableName -> set the env var at the runtine and values are taken from host machine.

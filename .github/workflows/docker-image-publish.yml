@@ -22,3 +22,6 @@ jobs:
       run: docker-compose build -f docker-compose.yml
     - name: Listing built images from docker-compose
       run: docker images --all
+  push:
+    - name: pushing images
+      run: docker-compose push

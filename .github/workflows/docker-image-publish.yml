@@ -1,7 +1,7 @@
 name: Docker-compose build and push images to docker hub
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "test" ]
 
 jobs:
   build:

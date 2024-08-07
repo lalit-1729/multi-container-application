@@ -22,8 +22,10 @@ jobs:
       run: docker compose -f docker-compose.yml build
     - name: Listing built images from docker-compose
       run: docker images --all
-    - name: viewing all the services
+    - name: Viewing all the services
       run: docker compose -f docker-compose.yml ps
-    - name: pushing images
+    - name: Pushing images
       run: docker compose push
+    - name: Logging out
+      run: docker logout
     

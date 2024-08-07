@@ -23,5 +23,9 @@ jobs:
     - name: Listing built images from docker-compose
       run: docker images --all
   push:
+    runs-on: ubuntu-latest
+    steps:
     - name: pushing images
       run: docker-compose push
+    - name: logging out
+      run: docker logout

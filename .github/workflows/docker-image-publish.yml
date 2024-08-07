@@ -28,3 +28,6 @@ jobs:
         compose-file: "./docker-compose.yml"
     - name: Listing built images from docker-compose
       run: docker images --all
+    - name: Pushing all the images
+      run: |
+          docker-compose push
